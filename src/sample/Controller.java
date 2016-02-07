@@ -36,7 +36,7 @@ public class Controller  {
     private Socket serverConectionState;
     private String serverIp = "127.0.0.1";
 
-    private void connectToServer(){
+    public void connectToServer(){
         try {
             serverConectionState = new Socket(serverIp, 6789);
             getFromServer = new DataInputStream(serverConectionState.getInputStream());
@@ -51,34 +51,29 @@ public class Controller  {
 
 
 
-    private void sendMessage() {
+    public void sendMessage() {
 
 
         try {
+            message = userText.getText();
             sendToServer.writeUTF(message);
             sendToServer.flush();
 
             System.out.print(message);
 
-            //  chatWindow.appendText(df.format(date) + ": " + userDataText + "\n");
             chatWindow.appendText(message + "\n");
-        } catch (EOFException eofException) {
-            chatWindow.appendText("Could not send/receive message! \n");
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }finally {
-            closeConnection();
-        }
-           // userText.clear();
-        }
 
-    //}
+        }catch (IOException ioException){
+            chatWindow.appendText("Connection error.");
+        }
+        userText.setText("");
+    }
 
-    private void getMessage(){
+    public void getMessage(){
 
     }
 
-    private void closeConnection(){
+    public void closeConnection(){
         onlineOffline.setText("Closing connection. . .");
         try {
             sendToServer.close();
@@ -90,6 +85,13 @@ public class Controller  {
     }
 
 }
+
+
+
+
+
+
+
 
 //getting current date and time using Date class
 
@@ -103,3 +105,4 @@ public class Controller  {
 // } else {
 //  userDataText = userText.getText();
 //   chatWindow.appendText(df.format(date) + ": " + userDataText + "\n");
+//  chatWindow.appendText(df.format(date) + ": " + userDataText + "\n");
