@@ -29,16 +29,14 @@ public class Controller  {
     @FXML private TextField userText,ipAdr;
     @FXML private TextArea chatWindow;
     @FXML private Label onlineOffline;
-    public java.lang.String userDataText;
+
+    private DataOutputStream sendToServer;
+    private DataInputStream getFromServer;
+    private String message = "";
     private Socket serverConectionState;
+    private String serverIp = "127.0.0.1";
 
-
-    DataOutputStream sendToServer = null;
-    DataInputStream getFromServer = null;
-
-    public String serverIp = "127.0.0.1";
-
-    public void connectToServer(){
+    private void connectToServer(){
         try {
             serverConectionState = new Socket(serverIp, 6789);
             getFromServer = new DataInputStream(serverConectionState.getInputStream());
@@ -53,31 +51,17 @@ public class Controller  {
 
 
 
-    public void sendMessage() {
-
-        //getting current date and time using Date class
-
-        // DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
-        // Date date = new Date();
-
-        //print data to text box and take user data
-
-        //if (userText.getText().equals("") || userText.getText().isEmpty()) {
-        //do noting if no String
-        // } else {
-        //  userDataText = userText.getText();
-        //   chatWindow.appendText(df.format(date) + ": " + userDataText + "\n");
+    private void sendMessage() {
 
 
         try {
-
-            sendToServer.writeUTF(userText.getText());
+            sendToServer.writeUTF(message);
             sendToServer.flush();
 
-            String messege = getFromServer.readUTF();
+            System.out.print(message);
 
             //  chatWindow.appendText(df.format(date) + ": " + userDataText + "\n");
-            chatWindow.appendText(messege + "\n");
+            chatWindow.appendText(message + "\n");
         } catch (EOFException eofException) {
             chatWindow.appendText("Could not send/receive message! \n");
         } catch (IOException ioException) {
@@ -85,16 +69,16 @@ public class Controller  {
         }finally {
             closeConnection();
         }
-            userText.clear();
+           // userText.clear();
         }
 
     //}
 
-    public void getMessage(){
+    private void getMessage(){
 
     }
 
-    public void closeConnection(){
+    private void closeConnection(){
         onlineOffline.setText("Closing connection. . .");
         try {
             sendToServer.close();
@@ -106,3 +90,16 @@ public class Controller  {
     }
 
 }
+
+//getting current date and time using Date class
+
+// DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+// Date date = new Date();
+
+//print data to text box and take user data
+
+//if (userText.getText().equals("") || userText.getText().isEmpty()) {
+//do noting if no String
+// } else {
+//  userDataText = userText.getText();
+//   chatWindow.appendText(df.format(date) + ": " + userDataText + "\n");
