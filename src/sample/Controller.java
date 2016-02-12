@@ -1,26 +1,16 @@
 package sample;
 
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.paint.*;
-import javafx.scene.paint.Paint;
-import sun.font.TextLabel;
 
-import java.awt.*;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.EOFException;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.io.*;
 import java.net.Socket;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 
 
 public class Controller  {
@@ -29,31 +19,59 @@ public class Controller  {
     @FXML private TextField userText,ipAdr;
     @FXML private TextArea chatWindow;
     @FXML private Label onlineOffline;
-
     private DataOutputStream sendToServer;
     private DataInputStream getFromServer;
     private String message = "";
     private Socket serverConectionState;
-    private String serverIp = "127.0.0.1";
+    private String serverIP,msg;
+
+
+
+
+
+
 
     public void connectToServer(){
         try {
-            serverConectionState = new Socket(serverIp, 6789);
+            serverConectionState = new Socket("127.0.0.1", 6789);
             getFromServer = new DataInputStream(serverConectionState.getInputStream());
             sendToServer = new DataOutputStream(serverConectionState.getOutputStream());
-            chatWindow.appendText("Connect to server!\n");
             onlineOffline.setText("Online");
             onlineOffline.setTextFill(javafx.scene.paint.Color.web("#0076a3"));
-        }catch (IOException ex){
+
+
+            whileChatting();
+        } catch (IOException ex){
             chatWindow.appendText("Could not connect to server!\n");
+
         }
     }
 
 
 
+    //update chat window
+    public void showMessage(final String message){
+        Platform.runLater(
+                new Runnable() {
+                    public void run() {
+                        chatWindow.appendText(message);
+                    }
+                }
+        );
+    }
+
+    public void closeConnection(){
+        onlineOffline.setText("Closing connection. . .");
+        try {
+            sendToServer.close();
+            getFromServer.close();
+            serverConectionState.close();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
     public void sendMessage() {
-
-
         try {
             message = userText.getText();
             sendToServer.writeUTF(message);
@@ -67,21 +85,33 @@ public class Controller  {
             chatWindow.appendText("Connection error.");
         }
         userText.setText("");
+
+
+
     }
-
-    public void getMessage(){
-
+    public void getMessage() {
+     //   do {
+            Platform.runLater(() -> {
+                try {
+                    msg = getFromServer.readUTF();
+                    chatWindow.appendText(msg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+      //  }while (!message.equals("SERVER - END"));
     }
-
-    public void closeConnection(){
-        onlineOffline.setText("Closing connection. . .");
-        try {
-            sendToServer.close();
-            getFromServer.close();
-            serverConectionState.close();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
+    private void whileChatting() throws IOException{
+        String message = " You are now connected! ";
+       // sendMessage(message);
+        do{
+            try{
+                message = (String) getFromServer.readUTF();
+               // showMessage("\n" + message);
+            }catch(IOException ex){
+              //  showMessage("The user has sent an unknown object!");
+            }
+        }while(!message.equals("CLIENT - END"));
     }
 
 }
