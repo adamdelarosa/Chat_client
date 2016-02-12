@@ -20,7 +20,10 @@ public class Controller implements Runnable {
     private String serverIP,msg;
     private Thread iThread;
 
+
     public void connectToServer(){
+
+
         try {
             serverConectionState = new Socket("127.0.0.1", 6789);
             getFromServer = new DataInputStream(serverConectionState.getInputStream());
@@ -30,6 +33,7 @@ public class Controller implements Runnable {
         } catch (IOException ex){
             chatWindow.appendText("Could not connect to server!\n");
         }
+        getMessage();
     }
 
     public void sendMessage() {
@@ -46,7 +50,7 @@ public class Controller implements Runnable {
         userText.setText("");
     }
 
-    public void getMessage() { // <-- This is a button for test.
+    public void getMessage() {
         iThread = new Thread(this);
         iThread.start();
     }
