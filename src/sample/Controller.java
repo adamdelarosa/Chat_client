@@ -48,7 +48,7 @@ public class Controller implements Runnable {
 
     public void getMessage() { // <-- This is a button for test.
         iThread = new Thread(this);
-        iThread.run();
+        iThread.start();
     }
 
     public void run(){
