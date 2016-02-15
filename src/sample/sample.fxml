@@ -52,7 +52,7 @@
         </MenuBar>
         <SplitPane fx:id="pane" dividerPositions="0.21714922048997773" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <items>
-                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="548.0" prefWidth="319.0">
+                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="514.0" prefWidth="193.0">
                     <children>
                         <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Master" textAlignment="CENTER" wrapText="false">
                             <font>
@@ -62,9 +62,8 @@
                                 <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
                             </textFill>
                         </Label>
-                  <Button layoutX="44.0" layoutY="398.0" mnemonicParsing="false" onAction="#connectToServer" text="Connect" />
-                  <TextField fx:id="ipAdr" layoutX="20.0" layoutY="435.0" />
-                  <Button layoutX="28.0" layoutY="362.0" mnemonicParsing="false" onAction="#getMessage" text="getMessage" />
+                  <Button layoutX="9.0" layoutY="508.0" mnemonicParsing="false" onAction="#connectToServer" text="Connect" />
+                  <TextField fx:id="ipAdr" layoutX="81.0" layoutY="508.0" prefHeight="26.0" prefWidth="102.0" />
                     </children>
                 </AnchorPane>
                 <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pannable="true" prefHeight="661.0" prefWidth="669.0">
