@@ -42,7 +42,7 @@ public class Controller implements Runnable {
             sendToServer.writeUTF(message);
             sendToServer.flush();
 
-            chatWindow.appendText(message + "\n");
+            chatWindow.appendText("\n" + message);
 
         }catch (IOException ioException){
             chatWindow.appendText("Connection error.");
@@ -58,8 +58,8 @@ public class Controller implements Runnable {
     public void run(){
         do {
             try {
-                String msg = getFromServer.readUTF(); // <--- freeze GUI
-                Platform.runLater(() -> chatWindow.appendText(msg));
+                String msg = getFromServer.readUTF();
+                Platform.runLater(() -> chatWindow.appendText(msg + "\n"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
