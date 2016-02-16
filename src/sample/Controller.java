@@ -22,8 +22,6 @@ public class Controller implements Runnable {
 
 
     public void connectToServer(){
-
-
         try {
             serverConectionState = new Socket("127.0.0.1", 6789);
             getFromServer = new DataInputStream(serverConectionState.getInputStream());
