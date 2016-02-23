@@ -33,7 +33,7 @@ public class Controller implements Runnable {
         } catch (EOFException eofexception){
             eofexception.printStackTrace();
         } catch (IOException ex){
-            chatWindow.appendText("Could not connect to server!\n");
+            chatWindow.appendText("\nCould not connect to server!");
         }finally {
            // closeConnection();
         }
@@ -41,7 +41,7 @@ public class Controller implements Runnable {
     }
 
     public void closeConnection(){
-        chatWindow.appendText("Closing the connection . . .");
+        chatWindow.appendText("\nClosing the connection . . .");
         try {
             getMessageThreadSwitch = true;
             sendToServer.close();
@@ -62,7 +62,7 @@ public class Controller implements Runnable {
             chatWindow.appendText("\n" + message);
 
         }catch (IOException ioException){
-            chatWindow.appendText("Connection error.");
+            chatWindow.appendText("\nConnection error.");
         }
         userText.setText("");
     }
@@ -76,7 +76,7 @@ public class Controller implements Runnable {
         do {
             try {
                 String msg = getFromServer.readUTF();
-                Platform.runLater(() -> chatWindow.appendText(msg + "\n"));
+                Platform.runLater(() -> chatWindow.appendText("\n" + msg));
             } catch (SocketException socketIsClose){
                 socketIsClose.printStackTrace();
             } catch (IOException e) {
