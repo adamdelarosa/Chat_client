@@ -20,24 +20,32 @@ public class Controller implements Runnable {
     private Socket serverConectionState;
     private String serverIP,msg;
     private Thread iThread;
-    private boolean getMessageThreadSwitch;
+    private volatile boolean getMessageThreadSwitch;
 
 
     public void connectToServer(){
         try {
-            serverConectionState = new Socket("127.0.0.1", 6789);
-            getFromServer = new DataInputStream(serverConectionState.getInputStream());
-            sendToServer = new DataOutputStream(serverConectionState.getOutputStream());
-            onlineOffline.setText("Online");
-            onlineOffline.setTextFill(javafx.scene.paint.Color.web("#0076a3"));
+            connectionStart();
+            streamsStart();
+            getMessage();
         } catch (EOFException eofexception){
-            eofexception.printStackTrace();
+            chatWindow.appendText("\n Client terminated the connection");
         } catch (IOException ex){
-            chatWindow.appendText("\nCould not connect to server!");
+            ex.printStackTrace();
         }finally {
-           // closeConnection();
+            System.out.println("finally");
+        //    closeConnection();
         }
-        getMessage();
+
+        onlineOffline.setText("Online");
+        onlineOffline.setTextFill(javafx.scene.paint.Color.web("#0076a3"));
+    }
+    public void connectionStart() throws IOException {
+        serverConectionState = new Socket("127.0.0.1", 6789);
+    }
+    public void streamsStart() throws IOException {
+        getFromServer = new DataInputStream(serverConectionState.getInputStream());
+        sendToServer = new DataOutputStream(serverConectionState.getOutputStream());
     }
 
     public void closeConnection(){
