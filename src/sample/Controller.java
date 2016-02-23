@@ -49,7 +49,6 @@ public class Controller implements Runnable {
     }
 
     public void closeConnection(){
-        chatWindow.appendText("\nClosing the connection . . .");
         try {
             getMessageThreadSwitch = true;
             sendToServer.close();
@@ -92,5 +91,9 @@ public class Controller implements Runnable {
             }
         } while (!getMessageThreadSwitch);
     }
+    public void closeAll() {
+            Platform.exit();
+            System.exit(0);
+        }
 }
 
