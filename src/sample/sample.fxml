@@ -64,6 +64,7 @@
                         </Label>
                   <Button layoutX="9.0" layoutY="508.0" mnemonicParsing="false" onAction="#connectToServer" text="Connect" />
                   <TextField fx:id="ipAdr" layoutX="81.0" layoutY="508.0" prefHeight="26.0" prefWidth="102.0" />
+                  <Button layoutX="9.0" layoutY="476.0" mnemonicParsing="false" onAction="#closeConnection" prefHeight="26.0" prefWidth="174.0" text="Disconnect" />
                     </children>
                 </AnchorPane>
                 <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pannable="true" prefHeight="661.0" prefWidth="669.0">
