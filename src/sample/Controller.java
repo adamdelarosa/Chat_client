@@ -22,7 +22,6 @@ public class Controller implements Runnable {
     private Thread iThread;
     private volatile boolean getMessageThreadSwitch;
 
-
     public void connectToServer(){
         try {
             connectionStart();
