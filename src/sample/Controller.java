@@ -28,6 +28,7 @@ public class Controller implements Runnable {
             connectionStart();
             streamsStart();
             getMessage();
+            //checkConnection();
         } catch (EOFException eofexception){
             chatWindow.appendText("\n Client terminated the connection");
         } catch (IOException ex){
@@ -46,6 +47,14 @@ public class Controller implements Runnable {
     public void streamsStart() throws IOException {
         getFromServer = new DataInputStream(serverConectionState.getInputStream());
         sendToServer = new DataOutputStream(serverConectionState.getOutputStream());
+    }
+
+    public void checkConnection(){
+        Platform.runLater(()->{
+        do{
+            //System.out.print("FUCK YOU");
+        }while (true);
+        });
     }
 
     public void closeConnection(){
