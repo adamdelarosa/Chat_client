@@ -52,7 +52,7 @@ public class Controller implements Runnable {
     public void checkConnection(){
         Platform.runLater(()->{
         do{
-            //System.out.print("FUCK YOU");
+            System.out.print("YOU");
         }while (true);
         });
     }
