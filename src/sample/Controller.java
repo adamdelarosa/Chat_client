@@ -5,65 +5,82 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 
 public class Controller implements Runnable {
 
-    @FXML private TextField userText,ipAdr;
-    @FXML private TextArea chatWindow;
-    @FXML private Label onlineOffline;
+    @FXML
+    private TextField userText, ipAdr;
+    @FXML
+    private TextArea chatWindow;
+    @FXML
+    private Label onlineOffline;
     public DataInputStream getFromServer = null;
     private DataOutputStream sendToServer = null;
     private String message = "";
     private Socket serverConectionState;
-    private String serverIP,msg;
+    private String serverIP, msg;
     private Thread iThread;
     private volatile boolean getMessageThreadSwitch;
 
 
-    public void connectToServer(){
+    public void connectToServer() {
         try {
             connectionStart();
             streamsStart();
             getMessage();
             //checkConnection();
-        } catch (EOFException eofexception){
+        } catch (EOFException eofexception) {
             chatWindow.appendText("\n Client terminated the connection");
-        } catch (IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
-        }finally {
+        } finally {
             System.out.println("finally");
-        //    closeConnection();
+            //    closeConnection();
         }
 
-        onlineOffline.setText("Online");
-        onlineOffline.setTextFill(javafx.scene.paint.Color.web("#0076a3"));
+        //onlineOffline.setText("Online");
+        //onlineOffline.setTextFill(javafx.scene.paint.Color.web("#0076a3"));
     }
+
     public void connectionStart() throws IOException {
         serverConectionState = new Socket("127.0.0.1", 6789);
     }
+
     public void streamsStart() throws IOException {
         getFromServer = new DataInputStream(serverConectionState.getInputStream());
         sendToServer = new DataOutputStream(serverConectionState.getOutputStream());
     }
 
-    public void checkConnection(){
-        Platform.runLater(()->{
-        do{
-            System.out.print("YOU");
-        }while (true);
+    public void checkConnection() {
+        Thread threadCheckConnection = new Thread(() -> {
+            Platform.runLater(() -> {
+                do {
+                    try {
+                    System.out.print("YOU");
+                        Thread.sleep(1000);
+                        System.out.print("SLEEP");
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } while (true);
+            });
         });
+        threadCheckConnection.start();
     }
 
-    public void closeConnection(){
+
+    public void closeConnection() {
         try {
             getMessageThreadSwitch = true;
             sendToServer.close();
             getFromServer.close();
             serverConectionState.close();
-        }catch (IOException ioexception){
+        } catch (IOException ioexception) {
             ioexception.printStackTrace();
         }
 
@@ -77,7 +94,7 @@ public class Controller implements Runnable {
 
             chatWindow.appendText("\n" + message);
 
-        }catch (IOException ioException){
+        } catch (IOException ioException) {
             chatWindow.appendText("\nConnection error.");
         }
         userText.setText("");
@@ -88,21 +105,23 @@ public class Controller implements Runnable {
         iThread.start();
     }
 
-    public void run(){
+    public void run() {
         do {
             try {
                 String msg = getFromServer.readUTF();
                 Platform.runLater(() -> chatWindow.appendText("\n" + msg));
-            } catch (SocketException socketIsClose){
+            } catch (SocketException socketIsClose) {
                 socketIsClose.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } while (!getMessageThreadSwitch);
     }
+
     public void closeAll() {
-            Platform.exit();
-            System.exit(0);
-        }
+        Platform.exit();
+        System.exit(0);
+    }
+
 }
 
