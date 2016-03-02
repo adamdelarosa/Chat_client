@@ -57,10 +57,9 @@ public class Controller implements Runnable {
 
     public void checkConnection() {
         Thread threadCheckConnection = new Thread(() -> {
-            Platform.runLater(() -> {
                 do {
                     try {
-                    System.out.print("YOU");
+            Platform.runLater(() -> System.out.print("YOU"));
                         Thread.sleep(1000);
                         System.out.print("SLEEP");
                         Thread.sleep(1000);
@@ -68,7 +67,6 @@ public class Controller implements Runnable {
                         e.printStackTrace();
                     }
                 } while (true);
-            });
         });
         threadCheckConnection.start();
     }
@@ -117,11 +115,5 @@ public class Controller implements Runnable {
             }
         } while (!getMessageThreadSwitch);
     }
-
-    public void closeAll() {
-        Platform.exit();
-        System.exit(0);
-    }
-
 }
 
