@@ -57,16 +57,25 @@ public class Controller implements Runnable {
 
     public void checkConnection() {
         Thread threadCheckConnection = new Thread(() -> {
-                do {
+            while (true) {
+                if (serverConectionState==null || !serverConectionState.isConnected()) {
                     try {
-            Platform.runLater(() -> System.out.print("YOU"));
+                        Platform.runLater(() -> System.out.print("YOU"));
                         Thread.sleep(1000);
                         System.out.print("SLEEP");
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                } while (true);
+                } else {
+                    try {
+                        Thread.sleep(1000);
+                        System.out.println("no");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         });
         threadCheckConnection.start();
     }
