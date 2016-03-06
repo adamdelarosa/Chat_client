@@ -13,6 +13,7 @@ import java.net.SocketException;
 public class Controller implements Runnable {
 
     @FXML
+
     private TextField userText, ipAdr;
     @FXML
     private TextArea chatWindow;
