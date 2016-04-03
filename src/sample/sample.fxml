@@ -54,7 +54,7 @@
             <items>
                 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="514.0" prefWidth="193.0">
                     <children>
-                        <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Master" textAlignment="CENTER" wrapText="false">
+                        <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Chat List" textAlignment="CENTER" wrapText="false">
                             <font>
                                 <Font size="18.0" fx:id="x1" />
                             </font>
@@ -62,10 +62,9 @@
                                 <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
                             </textFill>
                         </Label>
-                  <Button layoutX="9.0" layoutY="508.0" mnemonicParsing="false" onAction="#connectToServer" text="Connect" />
-                  <TextField fx:id="ipAdr" layoutX="81.0" layoutY="508.0" prefHeight="26.0" prefWidth="102.0" />
+                  <Button layoutX="9.0" layoutY="508.0" mnemonicParsing="false" onAction="#connectToServer" prefHeight="26.0" prefWidth="174.0" text="Connect" />
                   <Button layoutX="9.0" layoutY="476.0" mnemonicParsing="false" onAction="#closeConnection" prefHeight="26.0" prefWidth="174.0" text="Disconnect" />
-                  <Button layoutX="6.0" layoutY="444.0" mnemonicParsing="false" onAction="#checkConnection" prefHeight="26.0" prefWidth="174.0" text="Check Connection" />
+                  <Button layoutX="9.0" layoutY="444.0" mnemonicParsing="false" onAction="#checkConnection" prefHeight="26.0" prefWidth="174.0" text="Check Connection" />
                     </children>
                 </AnchorPane>
                 <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pannable="true" prefHeight="661.0" prefWidth="669.0">
